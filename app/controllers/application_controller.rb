@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
     include JsonWebToken
 
-    before_action :authenticate_request
+    before_action :authenticate_request, unless: :admin_request?
 
     private
 
@@ -18,6 +18,10 @@ class ApplicationController < ActionController::API
       
         @current_user = User.find(decoded[:user_id])
         p @current_user
+    end
+
+    def admin_request? 
+      controller_path.start_with?("admin/")
     end
       
 end
