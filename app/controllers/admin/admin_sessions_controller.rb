@@ -4,10 +4,16 @@ class Admin::AdminSessionsController < ApplicationController
         admin = Admin.find_by(email: params[:email])
 
         if admin && admin.authenticate(params[:password])
-            token = JWT.encode({admin_id: admin.id}, Rails.application.credentials.admin_auth[:secret_key_base], 'HS256')
-            render json: { token: token }, status: :ok 
+            payload = { admin:admin}
+            token = JWT.encode(payload, Rails.application.credentials.admin_auth[:secret_key_base], 'HS256')
+            render json: { 
+                token: token,
+                admin: true,
+                status: 'success',
+                }, status: :ok 
+                p token
         else
-            render json: { error: 'Invalid email or password' },status: :unauthorized
+            render json: { error: 'something went wrong' },status: :unauthorized
         end
     end
 
