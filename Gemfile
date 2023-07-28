@@ -48,3 +48,5 @@ end
 
 
 gem "jwt", "~> 2.7"
+
+gem 'faker', '~> 2.18', require: false

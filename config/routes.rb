@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :admin do 
     post '' , to: 'admin_sessions#create'
+    resources :users
   end
 
 end
